@@ -26,7 +26,7 @@ function Entry() {
                 isError={emptyError}
             />
             { emptyError ?
-                <div className="errorText"> Please Enter your Name </div> :
+                <div className="errorText"> Please Enter Your Name </div> :
                 null
             }
             <DropDownList
