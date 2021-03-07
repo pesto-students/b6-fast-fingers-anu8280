@@ -43,4 +43,5 @@ function Entry() {
         </div>
     );
 }
+
 export default Entry

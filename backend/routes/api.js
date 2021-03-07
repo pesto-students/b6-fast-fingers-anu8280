@@ -115,13 +115,14 @@ router.get('/', authenticateToken, (req, res) => {
 /* Get words on the basis of difficulty level */
 router.post('/getWords', authenticateToken, (req, res) => {
   const { level } = req.body;
-  connection.query('SELECT * from words where level_id = ? ORDER BY RAND() LIMIT 1000', [level.toUpperCase()], (err, results) => {
-    if (err) throw err;
-    res.send({
-      ...res.user,
-      result: results,
+  connection.query('SELECT * from words where level_id = ? ORDER BY RAND() LIMIT 1000',
+    [level.toUpperCase()], (err, results) => {
+      if (err) throw err;
+      res.send({
+        ...res.user,
+        result: results,
+      });
     });
-  });
 });
 
 /* add score to user */
@@ -134,26 +135,28 @@ router.post('/addScore', authenticateToken, (req, res) => {
   };
   connection.query('INSERT into game SET ? ', data, (error) => {
     if (error) throw error;
-    connection.query('SELECT * from game where user_id = ? and is_disabled = 0', [userId], (err, results) => {
-      if (err) throw err;
-      res.send({
-        ...res.user,
-        result: results,
+    connection.query('SELECT * from game where user_id = ? and is_disabled = 0',
+      [userId], (err, results) => {
+        if (err) throw err;
+        res.send({
+          ...res.user,
+          result: results,
+        });
       });
-    });
   });
 });
 
 /* get all score specified to user */
 router.get('/getScore', authenticateToken, (req, res) => {
   const { userId } = res.user;
-  connection.query('SELECT * from game where user_id = ? and is_disabled = 0', [userId], (error, results) => {
-    if (error) throw error;
-    res.send({
-      result: results,
-      ...res.user,
+  connection.query('SELECT * from game where user_id = ? and is_disabled = 0',
+    [userId], (error, results) => {
+      if (error) throw error;
+      res.send({
+        result: results,
+        ...res.user,
+      });
     });
-  });
 });
 
 /* quit game and disable score visibility on scoreboard */
